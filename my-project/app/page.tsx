@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import img from "@/public/images/dashboard.png";
+
 
 export default function Home() {
   const router = useRouter();

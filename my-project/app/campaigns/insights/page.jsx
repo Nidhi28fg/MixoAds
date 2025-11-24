@@ -32,8 +32,10 @@ export default function InsightsPage() {
 
 
   return (
-    <div className="p-6">
-         <div className="shadow-lg p-8 text-white bg-black rounded-lg">
+    <div className="p-6 h-screen flex justify-center items-center">
+        <div className="shadow-lg p-8 text-white bg-black rounded-lg">
+          <button className="bg-blue-500 text-white py-1 px-2 my-4 rounded" onClick={() => window.history.back()}>Go Back</button>
+       
       <h1 className="text-2xl font-bold mb-4">Campaign Insights</h1>
       <p>Active Campaigns: {insights.active_campaigns}</p>
         <p>Active: {insights.avg_conversion_rate}</p>
