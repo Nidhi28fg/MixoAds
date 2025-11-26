@@ -32,15 +32,16 @@ const items = [
         icon: Home,
     },
     {
+        title: "Campaigns 1",
+        url: "/campaigns1",
+        icon: Calendar,
+    },
+    {
         title: "Insights",
         url: "/campaigns/insights",
         icon: Inbox,
     },
-    {
-        title: "Contacts",
-        url: "#",
-        icon: Calendar,
-    },
+    
     {
         title: "Email",
         url: "#",
