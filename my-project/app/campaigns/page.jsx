@@ -60,7 +60,7 @@ export default function CampaignsPage() {
 
   return (
     <div className="w-full h-full p-4 ">
-      <h1 className="text-2xl font-bold mb-4">All Campaigns</h1>
+      <h1 className="text-2xl font-bold mb-4">Sample One Campaigns</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {campaigns.map((c) => (
           <Card key={c.id}>
