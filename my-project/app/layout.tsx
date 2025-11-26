@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import img from "@/public/images/dashboard.png";
 import React from 'react';
+import { SidebarProvider, SidebarTrigger} from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
 
 
 
@@ -31,24 +32,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-blue-900 text-white `}
       >
-        <div className="flex justify-center h-fit items-center bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-          style={{
-            backgroundImage: `url(${img.src})`,
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-          }}
-        >
-          <div className=" shadow-lg p-8 h-fit w-full text-white rounded-lg flex flex-col justify-center text-center items-center z-10"
-            style={{
-              backgroundColor: "rgb(0 0 0 / 71%)",
-            }}
-          >
+        <SidebarProvider>
+          <AppSidebar/>
+          <SidebarTrigger />
+     
             {children}
-          </div>
-        </div>
+         
+        </SidebarProvider>
 
 
 

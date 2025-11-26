@@ -2,6 +2,9 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
+
 
 export default function CampaignDetail({ params }) {
   const [campaigns1, setCampaigns1] = useState([]);
@@ -32,13 +35,13 @@ export default function CampaignDetail({ params }) {
     fetchCampaigns1();
   }, [id]);
 
-    if (loading) return <p className="h-screen flex flex-col justify-center items-center gap-5">Loading...</p>;
-  if (error) return <p style={{ color: "red" }} className="h-screen flex flex-col justify-center items-center gap-5" >Error: {error}</p>;
+    if (loading) return <p className="h-screen w-full flex justify-center items-center gap-5">Loading...</p>;
+  if (error) return <p style={{ color: "red" }} className="h-screen w-full flex flex-col justify-center items-center gap-5" >Error: {error}</p>;
 
   return (
-    <div className="p-6 flex justify-center items-center flex-col gap-4 h-screen">
+    <div className="p-6 flex justify-center items-center flex-col gap-4 h-screen w-full">
        <div className="shadow-lg p-8 text-white bg-black rounded-lg">
-     <button className="bg-blue-500 text-white py-1 px-2 my-4 rounded" onClick={() => window.history.back()}>Go Back</button>
+     <Button className="bg-blue-500 text-white py-1 px-2 my-4 rounded" onClick={() => window.history.back()}>Go Back</Button>
        <h1 className="text-2xl font-bold mb-4">{campaigns1.name}</h1>
       <p>Id: {campaigns1.id}</p>
       <p>Brand id: {campaigns1.brand_id}</p>
@@ -47,11 +50,11 @@ export default function CampaignDetail({ params }) {
       <p>Daily Budget: ${campaigns1.daily_budget}</p>
       <p>Created At: {new Date(campaigns1.created_at).toLocaleString()}</p>
 
-      <button className="bg-blue-500 text-white py-1 px-2 my-4 rounded"
+      <Button className="bg-blue-500 text-white py-1 px-2 my-4 rounded"
         onClick={() => router.push(`/campaigns/${campaigns1.id}/insights`)}
       >
         Metrics for Specific Campaign
-      </button>
+      </Button>
       </div>
     </div>
   );

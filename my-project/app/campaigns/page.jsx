@@ -1,54 +1,91 @@
-"use client"; 
+"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import img from "@/public/images/dashboard.png";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
 export default function CampaignsPage() {
   const [campaigns, setCampaigns] = useState([]);
-   const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const router = useRouter();
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
   useEffect(() => {
     async function fetchCampaigns() {
-        try {
-      const res = await fetch("https://mixo-fe-backend-task.vercel.app/campaigns");
-      if(!res.ok) {
-        const err = await res.json();
-        throw new Error(err.message);
-        //   throw new Error(`HTTP error! Status: ${res.status}`);
+      try {
+        const res = await fetch(
+          "https://mixo-fe-backend-task.vercel.app/campaigns"
+        );
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.message);
+          //   throw new Error(`HTTP error! Status: ${res.status}`);
         }
-      const data = await res.json();
-      setCampaigns(data.campaigns); 
-       } catch (error) {
+        const data = await res.json();
+        setCampaigns(data.campaigns);
+        console.log(data.campaigns);
+      } catch (error) {
         setError(error.message);
       } finally {
         setLoading(false);
       }
-    } 
+    }
     fetchCampaigns();
   }, []);
-     if (loading) return <p className="h-screen flex flex-col justify-center items-center gap-5">Loading...</p>;
-  if (error) return <p style={{ color: "red" }} className="h-screen flex flex-col justify-center items-center gap-5" >Error: {error}</p>;
-
+  if (loading)
+    return (
+      <p className="h-screen w-full flex justify-center items-center gap-5">
+        {" "}
+        <Spinner className="size-18" /> Loading...
+      </p>
+    );
+  if (error)
+    return (
+      <p
+        style={{ color: "red" }}
+        className="h-screen flex flex-col justify-center items-center gap-5"
+      >
+        Error: {error}
+      </p>
+    );
 
   return (
-<div className="h-fit m-8 p-8">
+    <div className="w-full h-full p-4 ">
       <h1 className="text-2xl font-bold mb-4">All Campaigns</h1>
-      <ul className="space-y-2 flex flex-wrap gap-4 justify-center">
-        {campaigns.map(c => (
-          <li key={c.id} className="p-3 rounded" >
-                <div className="shadow-lg p-8 text-white bg-black rounded-lg">
-            <p className="font-semibold ">{c.name}</p>
-            <p>Status: {c.status}</p>
-            <p>Budget: {c.budget}</p>
-            <p>Daily Budget: {c.daily_budget}</p>
-            <p>Platforms: {c.platforms.join(", ")}</p>
-            <button className="bg-blue-500 text-white py-2 rounded-xl my-4 px-2" onClick={() => router.push(`/campaigns/${c.id}`)}>Single Compaign Details</button>
-            </div>
-          </li>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {campaigns.map((c) => (
+          <Card key={c.id}>
+            <CardHeader>
+              <CardTitle className="font-bold text-xl">{c.name}</CardTitle>
+              <CardDescription className="font-bold">${c.budget}</CardDescription>
+              <CardAction><Button className={`${c.status === 'active' ? 'bg-green-600 ' : 'bg-red-500'} text-white font-bold w-full uppercase`}>{c.status}</Button></CardAction>
+            </CardHeader>
+            <CardContent>
+              <p>Daily Budget: {c.daily_budget}</p>
+              <p>Platforms: {c.platforms.join(", ")}</p>
+            </CardContent>
+            <CardFooter>
+              <Button
+                className="text-white w-full font-bold bg-amber-700 my-4"
+                variant="link"
+                size="sm"
+                onClick={() => router.push(`/campaigns/${c.id}`)}
+              >
+                Compaign Details
+              </Button>
+            </CardFooter>
+          </Card>
         ))}
-      </ul>
-    
+      </div>
     </div>
   );
 }
