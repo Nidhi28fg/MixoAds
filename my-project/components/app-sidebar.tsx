@@ -25,18 +25,23 @@ import {
 
 const items = [
     {
-        title: "Campaigns ",
+        title: "All Campaigns ",
         url: "/campaigns",
         icon: Home,
     },
     {
-        title: "Cam Ag-Grid-React ",
+        title: "Campaigns Table ",
         url: "/campaigns1",
         icon: Calendar,
     },
     {
         title: "Insights",
         url: "/campaigns/insights",
+        icon: Inbox,
+    },
+    {
+        title: "Chart of Budgets",
+        url: "/campaigns2",
         icon: Inbox,
     },
 ]
