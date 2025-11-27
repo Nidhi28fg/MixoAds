@@ -2,23 +2,35 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { AgGridReact } from 'ag-grid-react'; 
+import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
+
+
+ModuleRegistry.registerModules([AllCommunityModule]);
+
 
 export default function CampaignsPage() {
-  const [campaigns, setCampaigns] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+ const [rowData, setRowData] = useState([]);
+
+const [colDefs] = useState([
+  { field: "id" },
+  { field: "name" },
+  { field: "brand_id" },
+  { field: "status" },
+  { field: "budget" },
+  { field: "daily_budget" },
+  {
+    headerName: "platforms",
+    valueGetter: (params) => params.data.platforms.join(", "),
+  },
+  { field: "created_at" },
+]);
+
+
   useEffect(() => {
     async function fetchCampaigns() {
       try {
@@ -28,11 +40,11 @@ export default function CampaignsPage() {
         if (!res.ok) {
           const err = await res.json();
           throw new Error(err.message);
-          //   throw new Error(`HTTP error! Status: ${res.status}`);
         }
         const data = await res.json();
-        setCampaigns(data.campaigns);
-        console.log(data.campaigns);
+       setRowData(data.campaigns);
+        console.log(rowData);
+
       } catch (error) {
         setError(error.message);
       } finally {
@@ -41,6 +53,10 @@ export default function CampaignsPage() {
     }
     fetchCampaigns();
   }, []);
+
+  useEffect(() => {
+  console.log("rowData updated:", rowData);
+}, [rowData]);
   if (loading)
     return (
       <p className="h-screen w-full flex justify-center items-center gap-5">
@@ -59,33 +75,15 @@ export default function CampaignsPage() {
     );
 
   return (
-    <div className="w-full h-full p-4 ">
+    <div className="w-full h-full p-4 bg-none "  // या 'ag-theme-balham' या जिस theme को तुमने install किया हो
+  style={{ height: 800, width: "100%" }}>
       <h1 className="text-2xl font-bold mb-4">Sample Two Campaigns</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {campaigns.map((c) => (
-          <Card key={c.id}>
-            <CardHeader>
-              <CardTitle className="font-bold text-xl">{c.name}</CardTitle>
-              <CardDescription className="font-bold">${c.budget}</CardDescription>
-              <CardAction><Button className={`${c.status === 'active' ? 'bg-green-600 ' : 'bg-red-500'} text-white font-bold w-full uppercase`}>{c.status}</Button></CardAction>
-            </CardHeader>
-            <CardContent>
-              <p>Daily Budget: {c.daily_budget}</p>
-              <p>Platforms: {c.platforms.join(", ")}</p>
-            </CardContent>
-            <CardFooter>
-              <Button
-                className="text-white w-full font-bold bg-amber-700 my-4"
-                variant="link"
-                size="sm"
-                onClick={() => router.push(`/campaigns1/${c.id}`)}
-              >
-                Compaign Details
-              </Button>
-            </CardFooter>
-          </Card>
-        ))}
-      </div>
+         <AgGridReact 
+                    rowData={rowData}
+                    columnDefs={colDefs}
+           />
+    
+    
     </div>
   );
 }

@@ -28,8 +28,7 @@ export default function CampaignsPage() {
         if (!res.ok) {
           const err = await res.json();
           throw new Error(err.message);
-          //   throw new Error(`HTTP error! Status: ${res.status}`);
-        }
+       }
         const data = await res.json();
         setCampaigns(data.campaigns);
         console.log(data.campaigns);

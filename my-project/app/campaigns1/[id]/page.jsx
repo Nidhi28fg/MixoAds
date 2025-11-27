@@ -19,8 +19,6 @@ export default function CampaignDetail({ params }) {
 
   const [rowData, setRowData] = useState([
         { name: "", id: "", brand_id: "", status: "" },
-        { name: "", id: "", brand_id: "", status: "" },
-        { name: "", id: "", brand_id: "", status: "" },
     ]);
 
     

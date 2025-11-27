@@ -17,22 +17,20 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 
 
 } from "@/components/ui/dropdown-menu"
 
-// Menu items.
+
 const items = [
     {
-        title: "Campaigns",
+        title: "Campaigns ",
         url: "/campaigns",
         icon: Home,
     },
     {
-        title: "Campaigns 1",
+        title: "Cam Ag-Grid-React ",
         url: "/campaigns1",
         icon: Calendar,
     },
@@ -40,17 +38,6 @@ const items = [
         title: "Insights",
         url: "/campaigns/insights",
         icon: Inbox,
-    },
-    
-    {
-        title: "Email",
-        url: "#",
-        icon: Search,
-    },
-    {
-        title: "Phone",
-        url: "#",
-        icon: Settings,
     },
 ]
 
