@@ -2,11 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-// import React, { useState } from "react";
-import { createRoot } from "react-dom/client";
 import { AgCharts } from "ag-charts-react";
+import "ag-charts-enterprise";
 
 
 export default function CampaignsPage() {
@@ -36,7 +34,8 @@ export default function CampaignsPage() {
     fetchCampaigns();
   }, []);
 
-  const [options, setOptions] = useState({
+
+   const [options, setOptions] = useState({
     title: {
       text: "Total Budget vs Daily Budget",
     },
@@ -47,18 +46,16 @@ export default function CampaignsPage() {
      data: [],
     series: [
       {
-        type: "bar",
-        direction: "horizontal",
-        xKey: "id",
-        yKey: "budget",
-        yName: "budget",
+        type: "radar-area",
+             angleKey: "id",
+        radiusKey: "budget",
+        radiusName: "budget",
       },
       {
-        type: "bar",
-        direction: "horizontal",
-        xKey: "id",
-        yKey: "daily_budget",
-        yName: "daily_budget",
+        type: "radar-area",
+           angleKey: "id",
+        radiusKey: "daily_budget",
+        radiusName: "daily_budget",
       },
     ],
   });
@@ -95,12 +92,12 @@ export default function CampaignsPage() {
     height: "749px"
 }}
     >
-      <h1 className="text-2xl font-bold mb-4">Sample One Campaigns</h1>
-      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"> */}
-    <AgCharts options={options}
-     style={{
-    height: "749px"
-}}  />
+      <h1 className="text-2xl font-bold mb-4" >Budget of Campaigns</h1>
+         <AgCharts options={options}
+          style={{
+    height: 749
+}} 
+     />
 
         </div>
   );

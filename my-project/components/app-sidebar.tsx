@@ -9,26 +9,17 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-    SidebarMenuAction,
 
 } from "@/components/ui/sidebar";
 
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-
-
-} from "@/components/ui/dropdown-menu"
-
 
 const items = [
-    {
-        title: "All Campaigns ",
-        url: "/campaigns",
-        icon: Home,
+     {
+        title: "Daily Budgets",
+        url: "/campaigns3",
+        icon: Inbox,
     },
+    
     {
         title: "Campaigns Table ",
         url: "/campaigns1",
@@ -40,10 +31,16 @@ const items = [
         icon: Inbox,
     },
     {
-        title: "Chart of Budgets",
+        title: "Total Budgets",
         url: "/campaigns2",
         icon: Inbox,
     },
+    {
+        title: "All Campaigns ",
+        url: "/campaigns",
+        icon: Home,
+    },
+    
 ]
 
 export function AppSidebar() {
@@ -65,29 +62,7 @@ export function AppSidebar() {
                                 </SidebarMenuItem>
                             ))}
 
-                            <SidebarMenuItem>
-                                <SidebarMenuButton asChild>
-                                    <a href="#">
-                                        <Home />
-                                        <span>Home</span>
-                                    </a>
-                                </SidebarMenuButton>
-                                <DropdownMenu >
-                                    <DropdownMenuTrigger asChild>
-                                        <SidebarMenuAction className="hover:bg-transparent hover:text-inherit border-0 text-white">
-                                            <MoreHorizontal  />
-                                        </SidebarMenuAction>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent side="right" align="start">
-                                        <DropdownMenuItem>
-                                            <span>Edit Project</span>
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem>
-                                            <span>Delete Project</span>
-                                        </DropdownMenuItem>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
-                            </SidebarMenuItem>
+                           
                         </SidebarMenu>
 
                     </SidebarGroupContent>
