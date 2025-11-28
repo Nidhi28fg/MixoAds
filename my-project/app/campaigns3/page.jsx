@@ -36,6 +36,8 @@ export default function CampaignsPage() {
 
 
    const [options, setOptions] = useState({
+    height: 700,
+    width: 1000,
     title: {
       text: "Total Budget vs Daily Budget",
     },
@@ -90,16 +92,11 @@ export default function CampaignsPage() {
     <div
       className="w-full p-4 "
       style={{
-        height: "749px",
+        height: 749,
       }}
     >
       <h1 className="text-2xl font-bold mb-4">Budget of Campaigns</h1>
-      <AgCharts
-        options={options}
-        style={{
-          height: 749,
-        }}
-      />
+      <AgCharts options={options} />
     </div>
   );
 }

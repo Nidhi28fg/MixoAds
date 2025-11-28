@@ -1,34 +1,71 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Spinner } from "@/components/ui/spinner";
 import { AgGridReact } from 'ag-grid-react'; 
-import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
+// import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
+import {
+  CellStyleModule,
+  ClientSideRowModelModule,
+  ModuleRegistry,
+  ValidationModule,
+} from "ag-grid-community";ModuleRegistry.registerModules([
+  CellStyleModule,
+  ClientSideRowModelModule,
+  ...(process.env.NODE_ENV !== "production" ? [ValidationModule] : []),
+]);
+
+function currencyFormatter(params) {
+  const value = Math.floor(params.value);
+  if (isNaN(value)) {
+    return "";
+  }
+  return "£" + value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+}
 
 
-ModuleRegistry.registerModules([AllCommunityModule]);
+// ModuleRegistry.registerModules([AllCommunityModule]);
 
 
 export default function CampaignsPage() {
+  const containerStyle = useMemo(() => ({ width: "100%", height: "100%" }), []);
+  const gridStyle = useMemo(() => ({ height: "100%", width: "100%" }), []);
+ 
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
  const [rowData, setRowData] = useState([]);
 
-const [colDefs] = useState([
+  const columnTypes = useMemo(() => {
+    return {
+      currency: {
+        width: 150,
+        valueFormatter: currencyFormatter,
+      },
+      shaded: {
+        cellClass: "shaded-class",
+      },
+    };
+  }, []);
+
+const [colDefs , setColDefs] = useState([
   { field: "id" },
   { field: "name" },
   { field: "brand_id" },
   { field: "status" },
-  { field: "budget" },
-  { field: "daily_budget" },
+  { field: "budget", type: "currency" },
+  { field: "daily_budget", type: ["currency", "shaded"] },
   {
     headerName: "platforms",
     valueGetter: (params) => params.data.platforms.join(", "),
   },
   { field: "created_at" },
 ]);
+
+//  const defaultColDef = {
+//     flex: 1,
+//   };
 
 
   useEffect(() => {
@@ -74,16 +111,24 @@ const [colDefs] = useState([
       </p>
     );
 
+
+
+    
+
   return (
-    <div className="w-full h-full p-4 bg-none "  // या 'ag-theme-balham' या जिस theme को तुमने install किया हो
-  style={{ height: 800, width: "100%" }}>
-      <h1 className="text-2xl font-bold mb-4">Sample Two Campaigns</h1>
+    <div style={containerStyle}>
+      <h2 className="my-8 font-bold text-2xl">All Campaigns Student Lists</h2>
+      <div style={{ height: 900, boxSizing: "border-box" }}>
+        <div style={gridStyle}>
          <AgGridReact 
                     rowData={rowData}
+                    columnTypes={columnTypes}
                     columnDefs={colDefs}
+                  
+                    //  defaultColDef={defaultColDef}
            />
-    
-    
+</div>
+      </div>
     </div>
   );
-}
+};

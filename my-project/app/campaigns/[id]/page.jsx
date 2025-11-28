@@ -60,17 +60,11 @@ export default function CampaignDetail({ params }) {
   if (error) return <p style={{ color: "red" }} className="h-screen w-full flex flex-col justify-center items-center gap-5" >Error: {error}</p>;
 
   return (
-    <div className="p-6 flex justify-center items-center flex-col gap-4 h-screen w-full">
+    <div className="p-6 flex justify-center items-center w-full gap-4 h-screen">
        
-       <div className="shadow-lg p-8 text-white bg-black  w-full rounded-lg">
+       <div className="shadow-lg p-8 text-white bg-black rounded-lg">
      <Button className="bg-blue-500 text-white py-1 px-2 my-4 rounded" onClick={() => window.history.back()}>Go Back</Button>
-     <div style={{ height: 500 }}>
-        <AgGridReact
-
-            rowData={rowData}
-            columnDefs={colDefs}
-        />
-    </div>
+    
        <h1 className="text-2xl font-bold mb-4">{campaigns1.name}</h1>
       <p>Id: {campaigns1.id}</p>
       <p>Brand id: {campaigns1.brand_id}</p>
