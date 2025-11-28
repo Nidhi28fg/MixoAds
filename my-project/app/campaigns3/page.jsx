@@ -87,18 +87,19 @@ export default function CampaignsPage() {
     );
 
   return (
-    <div className="w-full p-4 "
-    style={{
-    height: "749px"
-}}
+    <div
+      className="w-full p-4 "
+      style={{
+        height: "749px",
+      }}
     >
-      <h1 className="text-2xl font-bold mb-4" >Budget of Campaigns</h1>
-         <AgCharts options={options}
-          style={{
-    height: 749
-}} 
-     />
-
-        </div>
+      <h1 className="text-2xl font-bold mb-4">Budget of Campaigns</h1>
+      <AgCharts
+        options={options}
+        style={{
+          height: 749,
+        }}
+      />
+    </div>
   );
 }
