@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import axios from "axios";
 import {
   Card,
   CardAction,
@@ -22,16 +23,11 @@ export default function CampaignsPage() {
   useEffect(() => {
     async function fetchCampaigns() {
       try {
-        const res = await fetch(
+        const res = await axios.get(
           "https://mixo-fe-backend-task.vercel.app/campaigns"
         );
-        if (!res.ok) {
-          const err = await res.json();
-          throw new Error(err.message);
-       }
-        const data = await res.json();
-        setCampaigns(data.campaigns);
-        console.log(data.campaigns);
+        setCampaigns(res.data.campaigns);
+        console.log(res.data.campaigns);
       } catch (error) {
         setError(error.message);
       } finally {

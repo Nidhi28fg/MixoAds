@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AgCharts } from "ag-charts-react";
-
+import axios from "axios";
 
 export default function InsightsPage() {
   const [insights, setInsights] = useState([]);
@@ -32,14 +32,9 @@ export default function InsightsPage() {
     useEffect(() => {
       async function fetchCampaigns() {
          try {
-        const res = await fetch("https://mixo-fe-backend-task.vercel.app/campaigns/insights");
-        if (!res.ok) {
-            const err = await res.json();
-        throw new Error(err.message);
-        }
-        const data = await res.json();
-        setInsights(data.insights);
-        console.log(data.insights);      
+        const res = await axios.get("https://mixo-fe-backend-task.vercel.app/campaigns/insights");
+        setInsights(res.data.insights);
+        console.log(res.data.insights);      
          } catch (error) {
         setError(error.message);
       } finally {

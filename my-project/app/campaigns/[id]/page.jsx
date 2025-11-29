@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { AgGridReact } from 'ag-grid-react'; 
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
+import axios from "axios";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -36,17 +37,11 @@ export default function CampaignDetail({ params }) {
   useEffect(() => {
     async function fetchCampaigns1() {
       try {
-        const res = await fetch(
+        const res = await axios.get(
           `https://mixo-fe-backend-task.vercel.app/campaigns/${id}`
         );
-        if (!res.ok) {
-            const err = await res.json();
-        throw new Error(err.message);
-        //   throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-        const data = await res.json();
-        console.log(data);
-        setCampaigns1(data.campaign);
+       
+        setCampaigns1(res.data.campaign);
       } catch (error) {
         setError(error.message);
       } finally {

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import React from "react";
+import axios from "axios";
 
 export default function CampaignDetail({ params }) {
   const [campaigns1, setCampaigns1] = useState([]);
@@ -13,16 +14,10 @@ export default function CampaignDetail({ params }) {
   useEffect(() => {
     async function fetchCampaigns1() {
       try {
-        const res = await fetch(
+        const res = await axios.get(
           `https://mixo-fe-backend-task.vercel.app/campaigns/${id}/insights`
         );
-        if (!res.ok) {
-            const err = await res.json();
-        throw new Error(err.message);
-        }
-        const data = await res.json();
-        console.log(data);
-        setCampaigns1(data.insights);
+        setCampaigns1(res.data.insights);
       } catch (error) {
         setError(error.message);
       } finally {
